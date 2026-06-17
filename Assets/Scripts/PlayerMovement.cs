@@ -11,7 +11,7 @@ private Rigidbody rb;
 
  void Update()
 {
-        transform.position += new Vector3(0, 0, 2) * Time.deltaTime;
+        transform.position += new Vector3(0, 0, 5) * Time.deltaTime;
 
   if (Input.GetKeyDown(KeyCode.Space))
         {
