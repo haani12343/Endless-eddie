@@ -2,29 +2,27 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-    public GameObject gameOverPanel;
-    void Awake()
-    {
-        instance = this;
-    }
-    public void GameOver()
-    {
-     Debug.Log("GameManager: " + gameObject.name);
-     Debug.Log("Panel: " + gameOverPanel);
+ public static GameManager instance;
+ public GameObject gameOverPanel;
+ public AudioClip gameOverSound;
+private AudioSource audioSource;
+void Awake()
+{
+instance = this;
+ audioSource = GetComponent<AudioSource>();
+}
+public void GameOver()
+{
+ if (gameOverSound != null)
+ {
+         audioSource.PlayOneShot(gameOverSound);
+     }
      Time.timeScale = 0f;
-     if (gameOverPanel != null)
-     {
-      gameOverPanel.SetActive(true);
-     }
-     else
-    {
-     Debug.LogError("Game Over Panel is NULL!");
-     }
+        gameOverPanel.SetActive(true);
     }
-    public void RestartGame()
+ public void RestartGame()
     {
      Time.timeScale = 1f;
-    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
