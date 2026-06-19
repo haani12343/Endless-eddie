@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -13,10 +14,21 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
+        StartCoroutine(GameOverRoutine());
+    }
+    IEnumerator GameOverRoutine()
+    {
         if (gameOverSound != null)
         {
             audioSource.PlayOneShot(gameOverSound);
         }
+        CameraFollow cam = Camera.main.GetComponent<CameraFollow>();
+        if (cam != null)
+        {
+            cam.Shake(0.5f, 1f);
+        }
+        yield return new WaitForSecondsRealtime(0.5f);
+
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
     }
